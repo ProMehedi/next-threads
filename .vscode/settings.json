@@ -1,0 +1,30 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "editor.codeActionsOnSave": ["source.formatDocument", "source.fixAll.eslint"],
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/node_modules": true,
+    "**/*.d.ts": true,
+    "**/*.md": true,
+    "*.log": true,
+    ".next": true,
+    "**/*.lock": true,
+    ".eslintrc": true,
+    ".eslintignore": true,
+    ".prettierrc": true,
+    ".prettierignore": true,
+    "**/.gitignore": true,
+    "**/*config.js*": true,
+    "**/*node.json": true,
+    "**/*lock.json": true,
+    // ".vscode": true,
+    "**/*.cjs": true
+  }
+}
