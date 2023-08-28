@@ -1,11 +1,11 @@
 import { UserButton } from '@clerk/nextjs'
 
-function Home() {
+const Home = () => {
   return (
-    <main>
-      <h1 className='text-heading1-bold'>Welcome to Threads!</h1>
+    <>
+      <h1 className='head-text text-left'>Welcome to Threads!</h1>
       <UserButton afterSignOutUrl='/' />
-    </main>
+    </>
   )
 }
 

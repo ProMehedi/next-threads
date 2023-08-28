@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 //
 import '@/globals.css'
+import { Bottombar, LeftSidebar, RightSidebar, Topbar } from '@components'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,7 +24,20 @@ export default function RootLayout({
         <head>
           <link rel='shortcut icon' href='favicon.png' type='image/x-icon' />
         </head>
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <Topbar />
+          <main>
+            <LeftSidebar />
+
+            <section className='main-container'>
+              <div className='w-full max-w-4xl'>{children}</div>
+            </section>
+
+            <RightSidebar />
+          </main>
+
+          <Bottombar />
+        </body>
       </html>
     </ClerkProvider>
   )
