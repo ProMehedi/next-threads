@@ -21,7 +21,7 @@
     ".prettierrc": true,
     ".prettierignore": true,
     "**/.gitignore": true,
-    "**/*config.js*": true,
+    // "**/*config.js*": true,
     "**/*node.json": true,
     "**/*lock.json": true,
     // ".vscode": true,
