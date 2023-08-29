@@ -43,7 +43,7 @@ const LeftSidebar = () => {
         <SignedIn>
           <SignOutButton
             signOutCallback={() => {
-              router.push('/')
+              router.push('/sign-in')
             }}
           >
             <div className='flex gap-4 p-4 curson-pointer'>
