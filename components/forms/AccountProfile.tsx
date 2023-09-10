@@ -19,10 +19,12 @@ import {
 import Button from '@components/Button'
 import { isBase64Image } from '@utils'
 import { useUploadThing } from '@utils/uploadThing'
+import { updateUser } from '@utils/actions/userActions'
+import { usePathname, useRouter } from 'next/navigation'
 
 interface Props {
   user: {
-    id?: string
+    id: string
     objectId?: string
     username?: string
     name?: string
@@ -36,6 +38,9 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
   const [file, setFile] = React.useState<File[]>([])
 
   const { startUpload } = useUploadThing('media')
+
+  const router = useRouter()
+  const pathname = usePathname()
 
   const form = useForm({
     resolver: zodResolver(userSchema),
@@ -66,7 +71,20 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
       }
     }
 
-    console.log(values)
+    await updateUser({
+      username: values.username,
+      name: values.name,
+      bio: values.bio,
+      image: values.profile_photo,
+      userId: user.id,
+      path: pathname,
+    })
+
+    if (pathname === '/profile/edit') {
+      router.back()
+    } else {
+      router.push('/')
+    }
   }
 
   return (
