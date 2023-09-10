@@ -13,12 +13,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Input,
   Textarea,
 } from '@components/forms'
 import Button from '@components/Button'
 // Utils
 import { threadSchema } from '@utils/validations'
+import { createThread } from '@utils/actions/threadActions'
 
 interface Props {
   userId: string
@@ -37,7 +37,14 @@ const PostThread: React.FC<Props> = ({ userId }) => {
   })
 
   const onSubmit = async (values: z.infer<typeof threadSchema>) => {
-    console.log(values)
+    await createThread({
+      text: values.thread,
+      author: userId,
+      communityId: null,
+      path: pathname,
+    })
+
+    router.push('/')
   }
 
   return (
