@@ -5,22 +5,24 @@ import React from 'react'
 import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-//
-import { userSchema } from '@utils/validations'
+import { usePathname, useRouter } from 'next/navigation'
+// Components
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
   Input,
   Textarea,
 } from '@components/forms'
 import Button from '@components/Button'
+// Utils
+import { userSchema } from '@utils/validations'
 import { isBase64Image } from '@utils'
 import { useUploadThing } from '@utils/uploadThing'
 import { updateUser } from '@utils/actions/userActions'
-import { usePathname, useRouter } from 'next/navigation'
 
 interface Props {
   user: {
@@ -57,6 +59,22 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
     fieldChange: (value: string) => void
   ) => {
     e.preventDefault()
+
+    const fileReader = new FileReader()
+
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0]
+      setFile(Array.from(e.target.files))
+
+      if (!file.type.includes('image')) return
+
+      fileReader.onload = async (event) => {
+        const imageDataUrl = event.target?.result?.toString() || ''
+        fieldChange(imageDataUrl)
+      }
+
+      fileReader.readAsDataURL(file)
+    }
   }
 
   const onSubmit = async (values: z.infer<typeof userSchema>) => {
@@ -127,6 +145,7 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
                   onChange={(e) => handleImage(e, field.onChange)}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -142,6 +161,7 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
               <FormControl className='flex-1 text-base-semibold text-gray-200'>
                 <Input type='text' className='account-form_input' {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -157,6 +177,7 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
               <FormControl className='flex-1 text-base-semibold text-gray-200'>
                 <Input type='text' className='account-form_input' {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -172,6 +193,7 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
               <FormControl className='flex-1 text-base-semibold text-gray-200'>
                 <Textarea rows={6} className='account-form_input' {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
