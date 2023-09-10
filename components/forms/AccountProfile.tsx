@@ -1,6 +1,7 @@
 'use client'
 
 import * as z from 'zod'
+import React from 'react'
 import Image from 'next/image'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -16,6 +17,8 @@ import {
   Textarea,
 } from '@components/forms'
 import Button from '@components/Button'
+import { isBase64Image } from '@utils'
+import { useUploadThing } from '@utils/uploadThing'
 
 interface Props {
   user: {
@@ -30,6 +33,10 @@ interface Props {
 }
 
 const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
+  const [file, setFile] = React.useState<File[]>([])
+
+  const { startUpload } = useUploadThing('media')
+
   const form = useForm({
     resolver: zodResolver(userSchema),
     defaultValues: {
@@ -47,7 +54,18 @@ const AccountProfile: React.FC<Props> = ({ user, btnTitle }) => {
     e.preventDefault()
   }
 
-  const onSubmit = (values: z.infer<typeof userSchema>) => {
+  const onSubmit = async (values: z.infer<typeof userSchema>) => {
+    const blob = values.profile_photo
+    const hasImgChanged = isBase64Image(blob)
+
+    if (hasImgChanged) {
+      const imgRes = await startUpload(file)
+
+      if (imgRes && imgRes.length > 0) {
+        values.profile_photo = imgRes[0].url
+      }
+    }
+
     console.log(values)
   }
 
