@@ -3,7 +3,12 @@ import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 //
 import '../globals.css'
-import { Bottombar, LeftSidebar, RightSidebar, Topbar } from '@components'
+import {
+  Bottombar,
+  LeftSidebar,
+  RightSidebar,
+  Topbar,
+} from '@components/shared'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,11 +18,7 @@ export const metadata: Metadata = {
     "We've built an all-in-one communication platform designed for makers. With Threads, avoid constant interruptions, the pain of keeping up / catching up, and encourage motion over progress as your company scales.",
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <ClerkProvider>
       <html lang='en'>
@@ -40,3 +41,5 @@ export default function RootLayout({
     </ClerkProvider>
   )
 }
+
+export default RootLayout
